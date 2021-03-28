@@ -1,3 +1,4 @@
+import pytest
 from collections import namedtuple
 
 Task = namedtuple('Task', ['summary', 'owner', 'done', 'id'])
@@ -10,6 +11,7 @@ def test_asdict():
     expected = {'summary': 'do something', 'owner': 'okken', 'done': True, 'id': 21}
     assert t_dict == expected
 
+@pytest.mark.run_these_please
 def test_replace():
     """_replace() should change passed in fields."""
     t_before = Task('finish book', 'brian')
