@@ -15,6 +15,18 @@ def equivalent(t1, t2):
     return ((t1.summary == t2.summary) and
         (t1.owner == t2.owner) and (t1.done == t2.done))
 
+@pytest.mark.parametrize('task',
+    [Task('sleep', done=True),
+     Task('wake', 'brian'),
+     Task('breathe', 'BRIAN', True),
+     Task('exercise', 'BrIaN', False)])
+def test_add_2(task):
+    """Demonstrate parametrize with one parameter."""
+    task_id = tasks.add(task)
+    t_from_db = tasks.get(task_id)
+    assert equivalent(t_from_db, task)
+
+
 @pytest.fixture(autouse=True)
 def initialized_tasks_db(tmpdir):
     """Connect to db before testing, disconnect after."""
