@@ -51,6 +51,16 @@ def test_add_4(task):
     t_from_db = tasks.get(task_id)
     assert equivalent(t_from_db, task)
 
+task_ids = ['Task({},{},{})'.format(t.summary, t.owner, t.done)
+        for t in tasks_to_try]
+
+@pytest.mark.parametrize('task', tasks_to_try, ids=task_ids)
+def test_add_5(task):
+    """Demonstrate ids."""
+    task_id = tasks.add(task)
+    t_from_db = tasks.get(task_id)
+    assert equivalent(t_from_db, task)
+
 
 @pytest.fixture(autouse=True)
 def initialized_tasks_db(tmpdir):
