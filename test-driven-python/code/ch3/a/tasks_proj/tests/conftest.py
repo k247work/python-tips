@@ -2,15 +2,18 @@ import pytest
 import tasks
 from tasks import Task
 
-@pytest.fixture()
-def tasks_db(tmpdir):
+@pytest.fixture(scope='session')
+def tasks_db_session(tmpdir_factory):
     """Connect to db before tests, disconnect after."""
-    # setup: start connection to db
-    tasks.start_tasks_db(str(tmpdir), 'tiny')
-    yield # execute tests
-
-    # teardown: terminate connection to db
+    temp_dir = tmpdir_factory.mktemp('temp')
+    tasks.start_tasks_db(str(temp_dir), 'tiny')
+    yield
     tasks.stop_tasks_db()
+
+@pytest.fixture()
+def tasks_db(tasks_db_session):
+    """An empty tasks db."""
+    tasks.delete_all()
 
 # About interface of Task constructor
 # Task(summary=None, owner=None, done=False, id=None)
