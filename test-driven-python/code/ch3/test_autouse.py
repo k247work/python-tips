@@ -24,5 +24,4 @@ def test_1():
     time.sleep(1)
 
 def test_2():
-    """Simulate slightly longer test."""
     time.sleep(1.23)
