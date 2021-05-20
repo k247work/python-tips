@@ -30,3 +30,12 @@ def sample_test(testdir):
             assert 1 == 2
     """)
     return testdir
+
+def test_with_nice(sample_test):
+    result = sample_test.runpytest('--nice')
+    result.stdout.fnmatch_lines(['*.O*',]) # . means success, O means failure
+    assert result.ret == 1
+
+# def test_with_nice_verbose
+
+# def test_not_nice_verbose
