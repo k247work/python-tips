@@ -1,3 +1,5 @@
+import pytest
+
 def test_pass_fail(testdir):
 
     # create temp pytest module
@@ -18,3 +20,13 @@ def test_pass_fail(testdir):
 
     # check terminal code of test suite is 1
     assert result.ret == 1
+
+@pytest.fixture()
+def sample_test(testdir):
+    testdir.makepyfile("""
+        def test_pass():
+            assert 1 == 1
+        def test_fail():
+            assert 1 == 2
+    """)
+    return testdir
