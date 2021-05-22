@@ -10,5 +10,5 @@ setup(
     license='proprietrary',
     py_modules=['pytest'],
     install_requires=['pytest'],
-    entry_points={'pytest1 1':['nuce = pytest_nice',],},
+    entry_points={'pytest11':['nice = pytest_nice',],},
 )
