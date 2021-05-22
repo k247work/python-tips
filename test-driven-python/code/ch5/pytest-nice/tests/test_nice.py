@@ -58,3 +58,9 @@ def test_header_not_nice(sample_test):
     thanks_message = 'Thanks for running thte tests.'
     assert thanks_message not in result.stdout.str()
 
+def test_help_message(testdir):
+    result = testdir.runpytest('--help')
+    result.stdout.fnmatch_lines([
+        'nice:',
+        '*--nice*nice:turn FAILED into Opportunity for improvement'])
+
