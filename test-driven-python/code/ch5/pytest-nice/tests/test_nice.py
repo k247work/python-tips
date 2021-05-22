@@ -36,6 +36,15 @@ def test_with_nice(sample_test):
     result.stdout.fnmatch_lines(['*.O*',]) # . means success, O means failure
     assert result.ret == 1
 
-# def test_with_nice_verbose
+def test_with_nice_verbose(sample_test):
+    result = sample_test.runpytest('-v', '--nice')
+    result.stdout.fnmatch_lines([
+        '*::test_fail OPPORTUNITY for improvement*',
+    ])
 
-# def test_not_nice_verbose
+    assert result.ret == 1
+
+def test_not_nice_verbose(sample_test):
+    result = sample_test.runpytest('-v')
+    result.stdout.fnmatch_lines(['*::test_fail FAILED*'])
+    assert result.ret == 1
