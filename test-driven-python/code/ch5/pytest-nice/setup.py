@@ -8,7 +8,7 @@ setup(
     author='<your name>',
     author_email='<xxx@yyyy>',
     license='proprietrary',
-    py_modules=['pytest'],
+    py_modules=['pytest_nice'],
     install_requires=['pytest'],
     entry_points={'pytest11':['nice = pytest_nice',],},
 )

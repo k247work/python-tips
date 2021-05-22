@@ -4,7 +4,7 @@ def pytest_addoption(parser):
     """Turn nice failure on with --nice option."""
     group = parser.getgroup('nice')
     group.addoption(
-        "--nice", action="store_tru",
+        "--nice", action="store_true",
         help="nice: turn FAILED int OPPORTNITY for improvement"
     )
 
