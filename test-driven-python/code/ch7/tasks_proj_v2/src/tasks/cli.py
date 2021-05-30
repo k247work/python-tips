@@ -7,3 +7,20 @@ if __name__ == '__main__':
 def tasks_cli():
     """Run the tasks application."""
     pass
+
+@tasks_cli.command(name="list", help="list tasks")
+@click.option('-o', '--owner', default=None, help='list tasks with this owner')
+def list_tasks(owner):
+    """
+    List tasks in db.
+
+    if owner given, only list tasks with that owner.
+    """
+    formatstr = "{: >4} {: >10} {: >5} {}"
+    print(formatstr.format('ID', 'owner', 'done', 'summary'))
+    print(formatstr.format('--', '-----', '----', '-------'))
+    with _tasks_db():
+        for t in tasks.list_tasks(owner):
+            done = 'True' if t.done else 'False'
+            owner = '' if t.owner is None else t.owner
+            print(formatstr.format(t.id, owner, done, t.summary))
