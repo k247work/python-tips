@@ -24,3 +24,11 @@ def list_tasks(owner):
             done = 'True' if t.done else 'False'
             owner = '' if t.owner is None else t.owner
             print(formatstr.format(t.id, owner, done, t.summary))
+
+@contextmanager
+def _tasks_db():
+    config = tasks.config.get_config()
+    tasks.start_tasks_db(config.db_path, config.db_type)
+    yield
+    tasks.stop_tasks_db()
+
