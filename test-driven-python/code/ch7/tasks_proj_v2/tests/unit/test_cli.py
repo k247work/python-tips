@@ -25,6 +25,26 @@ def test_list_print_empty(no_db, mocker):
     runner = CliRunner()
     result = runner.invoke(tasks.cli.tasks_cli, ['list'])
     expected_output = (
-        " ID  owner done summary\n",
+        " ID  owner done summary\n"
         " --  ----- ---- -------\n")
+    assert result.output == expected_output
+
+def test_list_print_many_items(no_db, mocker):
+    many_tasks = (
+        Task('write chapter', 'Brian', True, 1),
+        Task('edit chapter', 'Katie', False, 2),
+        Task('modify chapter', 'Brian', False, 3),
+        Task('finalize chapter', 'Katie', False, 4)
+    )
+    mocker.patch.object(tasks.cli.tasks, 'list_tasks',
+                return_value=many_tasks)
+    runner = CliRunner()
+    result = runner.invoke(tasks.cli.tasks_cli,['list'])
+    expected_output = (
+        " ID  owner done summary\n"
+        " --  ----- ---- -------\n"
+        "  1  Brian  True write chapter\n"
+        "  2  Katie False edit chapter\n"
+        "  1  Brian False modify chapter\n"
+        "  1  Brian False finalize chapter\n")
     assert result.output == expected_output
