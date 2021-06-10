@@ -1,4 +1,4 @@
-from click.testing import CLiRunner
+from click.testing import CliRunner, CliRunner
 from contextlib import contextmanager
 import pytest
 from tasks.api import Task
@@ -48,3 +48,15 @@ def test_list_print_many_items(no_db, mocker):
         "  1  Brian False modify chapter\n"
         "  1  Brian False finalize chapter\n")
     assert result.output == expected_output
+
+def test_list_dash_o(no_db, mocker):
+    mocker.patch.object(tasks.cli.tasks, 'list_tasks')
+    runner = CliRunner
+    runner.invoke(tasks.cli.tasks_cli, ['list', '-o', 'brian'])
+    tasks.cli.tasks.list_tasks.assert_called_once_with('brian')
+
+def test_list_dash_dash_owner(no_db, mocker):
+    mocker.patch.object(tasks.cli.tasks, 'list_tasks')
+    runner = CliRunner()
+    runner.invoke(tasks.cli.tasks_cli, ['list', '--owner', 'okken'])
+    tasks.cli.tasks.list_tasks.assert_called_once_with('okken')
